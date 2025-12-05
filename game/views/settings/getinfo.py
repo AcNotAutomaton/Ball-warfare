@@ -35,3 +35,8 @@ def getinfo(request):
         return getinfo_acapp(request)
     elif platform == "WEB":
         return getinfo_web(request)
+    else:
+        return JsonResponse({
+            'result': "error",
+            'message': "Invalid platform"
+        })
