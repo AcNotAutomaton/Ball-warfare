@@ -1,356 +1,4 @@
-export class AcGame {
-    constructor(id, AcWingOS) {
-        this.id = id;
-        this.$ac_game = $('#' + id);
-        this.AcWingOS = AcWingOS;
-
-        this.settings = new Settings(this);
-        this.menu = new AcGameMenu(this);
-        this.playground = new AcGamePlayground(this);
-
-        this.start();
-    }
-
-    start() {
-    }
-}
-class AcGameMenu {
-    constructor(root) {
-        this.root = root;
-        this.$menu = $(`
-<div class="ac-game-menu">
-    <div class="ac-game-menu-field">
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
-            单人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-multi-mode">
-            多人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
-            退出
-        </div>
-    </div>
-</div>
-`);
-        this.$menu.hide();
-        this.root.$ac_game.append(this.$menu);
-        this.$single_mode = this.$menu.find('.ac-game-menu-field-item-single-mode');
-        this.$multi_mode = this.$menu.find('.ac-game-menu-field-item-multi-mode');
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
-
-        this.start();
-    }
-
-    start() {
-        this.add_listening_events();
-    }
-
-    add_listening_events() {
-        let outer = this;
-        this.$single_mode.click(function(){
-            outer.hide();
-            outer.root.playground.show();
-        });
-        this.$multi_mode.click(function(){
-            console.log("click multi mode");
-        });
-        this.$settings.click(function(){
-            console.log("click settings");
-            outer.root.settings.logout_on_remote();
-        });
-    }
-
-    show() {  // 显示menu界面
-        this.$menu.show();
-    }
-
-    hide() {  // 关闭menu界面
-        this.$menu.hide();
-    }
-}
-class Settings {
-    constructor(root) {
-        this.root = root;
-        this.platform = "WEB";
-        if (this.root.AcWingOS) this.platform = "ACAPP";
-        this.username = "";
-        this.photo = "";
-
-        this.$settings = $(`
-<div class="ac-game-settings">
-    <div class="ac-game-settings-login">
-        <div class="ac-game-settings-title">
-            登录
-        </div>
-        <div class="ac-game-settings-username">
-            <div class="ac-game-settings-item">
-                <input type="text" placeholder="用户名">
-            </div>
-        </div>
-        <div class="ac-game-settings-password">
-            <div class="ac-game-settings-item">
-                <input type="password" placeholder="密码">
-            </div>
-        </div>
-        <div class="ac-game-settings-submit">
-            <div class="ac-game-settings-item">
-                <button>登录</button>
-            </div>
-        </div>
-        <div class="ac-game-settings-error-message">
-        </div>
-        <div class="ac-game-settings-option">
-            注册
-        </div>
-        <br>
-        <div class="ac-game-settings-acwing">
-            <img width="30" src="http://127.0.0.1:8080/static/image/settings/QQ.png">
-            <br>
-            <div>
-                QQ一键登录
-            </div>
-        </div>
-    </div>
-    <div class="ac-game-settings-register">
-        <div class="ac-game-settings-title">
-            注册
-        </div>
-        <div class="ac-game-settings-username">
-            <div class="ac-game-settings-item">
-                <input type="text" placeholder="用户名">
-            </div>
-        </div>
-        <div class="ac-game-settings-password ac-game-settings-password-first">
-            <div class="ac-game-settings-item">
-                <input type="password" placeholder="密码">
-            </div>
-        </div>
-        <div class="ac-game-settings-password ac-game-settings-password-second">
-            <div class="ac-game-settings-item">
-                <input type="password" placeholder="确认密码">
-            </div>
-        </div>
-        <div class="ac-game-settings-submit">
-            <div class="ac-game-settings-item">
-                <button>注册</button>
-            </div>
-        </div>
-        <div class="ac-game-settings-error-message">
-        </div>
-        <div class="ac-game-settings-option">
-            登录
-        </div>
-        <br>
-        <div class="ac-game-settings-acwing">
-            <img width="30" src="http://127.0.0.1:8080/static/image/settings/QQ.png">
-            <br>
-            <div>
-                QQ一键登录
-            </div>
-        </div>
-    </div>
-</div>
-`);
-        this.$login = this.$settings.find(".ac-game-settings-login");
-        this.$login_username = this.$login.find(".ac-game-settings-username input");
-        this.$login_password = this.$login.find(".ac-game-settings-password input");
-        this.$login_submit = this.$login.find(".ac-game-settings-submit button");
-        this.$login_error_message = this.$login.find(".ac-game-settings-error-message");
-        this.$login_register = this.$login.find(".ac-game-settings-option");
-
-        this.$login.hide();
-
-        this.$register = this.$settings.find(".ac-game-settings-register");
-        this.$register_username = this.$register.find(".ac-game-settings-username input");
-        this.$register_password = this.$register.find(".ac-game-settings-password-first input");
-        this.$register_password_confirm = this.$register.find(".ac-game-settings-password-second input");
-        this.$register_submit = this.$register.find(".ac-game-settings-submit button");
-        this.$register_error_message = this.$register.find(".ac-game-settings-error-message");
-        this.$register_login = this.$register.find(".ac-game-settings-option");
-
-        this.$register.hide();
-
-        this.root.$ac_game.append(this.$settings);
-
-        this.start();
-    }
-
-    start() {
-        this.getinfo();
-        this.add_listening_events();
-    }
-
-    add_listening_events() {
-        this.add_listening_events_login();
-        this.add_listening_events_register();
-    }
-
-    add_listening_events_login() {
-        let outer = this;
-
-        this.$login_register.click(function() {
-            outer.register();
-        });
-        this.$login_submit.click(function() {
-            outer.login_on_remote();
-        });
-    }
-
-    add_listening_events_register() {
-        let outer = this;
-        this.$register_login.click(function() {
-            outer.login();
-        });
-        this.$register_submit.click(function() {
-            outer.register_on_remote();
-        });
-    }
-
-    login_on_remote() {  // 在远程服务器上登录
-        let outer = this;
-        let username = this.$login_username.val();
-        let password = this.$login_password.val();
-        this.$login_error_message.empty();
-
-        $.ajax({
-            url: "http://127.0.0.1:8080/settings/login/",
-            type: "GET",
-            data: {
-                username: username,
-                password: password,
-            },
-            success: function(resp) {
-                console.log(resp);
-                if (resp.result === "success") {
-                    location.reload();
-                } else {
-                    outer.$login_error_message.html(resp.result);
-                }
-            }
-        });
-    }
-
-    register_on_remote() {  // 在远程服务器上注册
-        let outer = this;
-        let username = this.$register_username.val();
-        let password = this.$register_password.val();
-        let password_confirm = this.$register_password_confirm.val();
-        this.$register_error_message.empty();
-
-        $.ajax({
-            url: "http://127.0.0.1:8080/settings/register/",
-            type: "GET",
-            data: {
-                username: username,
-                password: password,
-                password_confirm: password_confirm,
-            },
-            success: function(resp) {
-                console.log(resp);
-                if (resp.result === "success") {
-                    location.reload();  // 刷新页面
-                } else {
-                    outer.$register_error_message.html(resp.result);
-                }
-            }
-        });
-    }
-
-    logout_on_remote() {  // 在远程服务器上登出
-        if (this.platform === "ACAPP") return false;
-
-        $.ajax({
-            url: "http://127.0.0.1:8080/settings/logout/",
-            type: "GET",
-            success: function(resp) {
-                console.log(resp);
-                if (resp.result === "success") {
-                    location.reload();
-                }
-            }
-        });
-    }
-
-    register() {  // 打开注册界面
-        this.$login.hide();
-        this.$register.show();
-    }
-
-    login() {  // 打开登录界面
-        this.$register.hide();
-        this.$login.show();
-    }
-
-    getinfo() {
-        let outer = this;
-
-        $.ajax({
-            url: "http://127.0.0.1:8080/settings/getinfo/",
-            type: "GET",
-            data: {
-                platform: outer.platform,
-            },
-            success: function(resp) {
-                console.log(resp);
-                if (resp.result === "success") {
-                    outer.username = resp.username;
-                    outer.photo = resp.photo;
-                    outer.hide();
-                    outer.root.menu.show();
-                } else {
-                    outer.login();
-                }
-            }
-        });
-    }
-
-    hide() {
-        this.$settings.hide();
-    }
-
-    show() {
-        this.$settings.show();
-    }
-}
-class AcGamePlayground {
-    constructor(root) {
-        this.root = root;
-        this.$playground = $(`<div class="ac-game-playground"></div>`);
-
-        this.hide();
-
-        this.start();
-    }
-
-    get_random_color() {
-        let colors = ["blue", "red", "pink", "grey", "green"];
-        return colors[Math.floor(Math.random() * 5)];
-    }
-
-    start() {
-    }
-
-    show() {  // 打开playground界面
-        this.$playground.show();
-        this.root.$ac_game.append(this.$playground);
-        this.width = this.$playground.width();
-        this.height = this.$playground.height();
-        this.game_map = new GameMap(this);
-        this.players = [];
-        this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
-
-        for (let i = 0; i < 5; i ++ ) {
-            this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
-        }
-
-    }
-
-    hide() {  // 关闭playground界面
-        this.$playground.hide();
-    }
-}
+// 游戏基础对象类
 let AC_GAME_OBJECTS = [];
 
 class AcGameObject {
@@ -401,29 +49,8 @@ let AC_GAME_ANIMATION = function(timestamp) {
 
 
 requestAnimationFrame(AC_GAME_ANIMATION);
-class GameMap extends AcGameObject {
-    constructor(playground) {
-        super();
-        this.playground = playground;
-        this.$canvas = $(`<canvas></canvas>`);
-        this.ctx = this.$canvas[0].getContext('2d');
-        this.ctx.canvas.width = this.playground.width;
-        this.ctx.canvas.height = this.playground.height;
-        this.playground.$playground.append(this.$canvas);
-    }
 
-    start() {
-    }
-
-    update() {
-        this.render();
-    }
-
-    render() {
-        this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    }
-}
+// 粒子效果类
 class Particle extends AcGameObject {
     constructor(playground, x, y, radius, vx, vy, color, speed, move_length) {
         super();
@@ -465,6 +92,103 @@ class Particle extends AcGameObject {
         this.ctx.fill();
     }
 }
+
+// 游戏地图类
+class GameMap extends AcGameObject {
+    constructor(playground) {
+        super();
+        this.playground = playground;
+        this.$canvas = $(`<canvas></canvas>`);
+        this.ctx = this.$canvas[0].getContext('2d');
+        this.ctx.canvas.width = this.playground.width;
+        this.ctx.canvas.height = this.playground.height;
+        this.playground.$playground.append(this.$canvas);
+    }
+
+    start() {
+    }
+
+    update() {
+        this.render();
+    }
+
+    render() {
+        this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    }
+}
+
+// 火球技能类
+class FireBall extends AcGameObject {
+    constructor(playground, player, x, y, radius, vx, vy, color, speed, move_length, damage) {
+        super();
+        this.playground = playground;
+        this.player = player;
+        this.ctx = this.playground.game_map.ctx;
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.radius = radius;
+        this.color = color;
+        this.speed = speed;
+        this.move_length = move_length;
+        this.damage = damage;
+        this.eps = 0.1;
+    }
+
+    start() {
+    }
+
+    update() {
+        if (this.move_length < this.eps) {
+            this.destroy();
+            return false;
+        }
+
+        let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+        this.x += this.vx * moved;
+        this.y += this.vy * moved;
+        this.move_length -= moved;
+
+        for (let i = 0; i < this.playground.players.length; i ++ ) {
+            let player = this.playground.players[i];
+            if (this.player !== player && this.is_collision(player)) {
+                this.attack(player);
+            }
+        }
+
+        this.render();
+    }
+
+    get_dist(x1, y1, x2, y2) {
+        let dx = x1 - x2;
+        let dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    is_collision(player) {
+        let distance = this.get_dist(this.x, this.y, player.x, player.y);
+        if (distance < this.radius + player.radius)
+            return true;
+        return false;
+    }
+
+    attack(player) {
+        let angle = Math.atan2(player.y - this.y, player.x - this.x);
+        player.is_attacked(angle, this.damage);
+        this.destroy();
+    }
+
+    render() {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+    }
+}
+
+// 玩家类
 class Player extends AcGameObject {
     constructor(playground, x, y, radius, color, speed, is_me) {
         super();
@@ -635,71 +359,364 @@ class Player extends AcGameObject {
         }
     }
 }
-class FireBall extends AcGameObject {
-    constructor(playground, player, x, y, radius, vx, vy, color, speed, move_length, damage) {
-        super();
-        this.playground = playground;
-        this.player = player;
-        this.ctx = this.playground.game_map.ctx;
-        this.x = x;
-        this.y = y;
-        this.vx = vx;
-        this.vy = vy;
-        this.radius = radius;
-        this.color = color;
-        this.speed = speed;
-        this.move_length = move_length;
-        this.damage = damage;
-        this.eps = 0.1;
+
+// 游戏场景类
+class AcGamePlayground {
+    constructor(root) {
+        this.root = root;
+        this.$playground = $(`<div class="ac-game-playground"></div>`);
+
+        this.hide();
+
+        this.start();
+    }
+
+    get_random_color() {
+        let colors = ["blue", "red", "pink", "grey", "green"];
+        return colors[Math.floor(Math.random() * 5)];
     }
 
     start() {
     }
 
-    update() {
-        if (this.move_length < this.eps) {
-            this.destroy();
-            return false;
+    show() {  // 打开playground界面
+        this.$playground.show();
+        this.root.$ac_game.append(this.$playground);
+        this.width = this.$playground.width();
+        this.height = this.$playground.height();
+        this.game_map = new GameMap(this);
+        this.players = [];
+        this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
+
+        for (let i = 0; i < 5; i ++ ) {
+            this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
         }
 
-        let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
-        this.x += this.vx * moved;
-        this.y += this.vy * moved;
-        this.move_length -= moved;
+    }
 
-        for (let i = 0; i < this.playground.players.length; i ++ ) {
-            let player = this.playground.players[i];
-            if (this.player !== player && this.is_collision(player)) {
-                this.attack(player);
+    hide() {  // 关闭playground界面
+        this.$playground.hide();
+    }
+}
+
+// 设置界面类
+class Settings {
+    constructor(root) {
+        this.root = root;
+        this.platform = "WEB";
+        if (this.root.AcWingOS) this.platform = "ACAPP";
+        this.username = "";
+        this.photo = "";
+
+        this.$settings = $(`
+<div class="ac-game-settings">
+    <div class="ac-game-settings-login">
+        <div class="ac-game-settings-title">
+            登录
+        </div>
+        <div class="ac-game-settings-username">
+            <div class="ac-game-settings-item">
+                <input type="text" placeholder="用户名">
+            </div>
+        </div>
+        <div class="ac-game-settings-password">
+            <div class="ac-game-settings-item">
+                <input type="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="ac-game-settings-submit">
+            <div class="ac-game-settings-item">
+                <button>登录</button>
+            </div>
+        </div>
+        <div class="ac-game-settings-error-message">
+        </div>
+        <div class="ac-game-settings-option">
+            注册
+        </div>
+        <br>
+        <div class="ac-game-settings-acwing">
+            <img width="30" src="/static/image/settings/QQ.png">
+            <br>
+            <div>
+                QQ一键登录
+            </div>
+        </div>
+    </div>
+    <div class="ac-game-settings-register">
+        <div class="ac-game-settings-title">
+            注册
+        </div>
+        <div class="ac-game-settings-username">
+            <div class="ac-game-settings-item">
+                <input type="text" placeholder="用户名">
+            </div>
+        </div>
+        <div class="ac-game-settings-password ac-game-settings-password-first">
+            <div class="ac-game-settings-item">
+                <input type="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="ac-game-settings-password ac-game-settings-password-second">
+            <div class="ac-game-settings-item">
+                <input type="password" placeholder="确认密码">
+            </div>
+        </div>
+        <div class="ac-game-settings-submit">
+            <div class="ac-game-settings-item">
+                <button>注册</button>
+            </div>
+        </div>
+        <div class="ac-game-settings-error-message">
+        </div>
+        <div class="ac-game-settings-option">
+            登录
+        </div>
+        <br>
+        <div class="ac-game-settings-acwing">
+            <img width="30" src="/static/image/settings/QQ.png">
+            <br>
+            <div>
+                QQ一键登录
+            </div>
+        </div>
+    </div>
+</div>
+`);
+        this.$login = this.$settings.find(".ac-game-settings-login");
+        this.$login_username = this.$login.find(".ac-game-settings-username input");
+        this.$login_password = this.$login.find(".ac-game-settings-password input");
+        this.$login_submit = this.$login.find(".ac-game-settings-submit button");
+        this.$login_error_message = this.$login.find(".ac-game-settings-error-message");
+        this.$login_register = this.$login.find(".ac-game-settings-option");
+
+        this.$login.hide();
+
+        this.$register = this.$settings.find(".ac-game-settings-register");
+        this.$register_username = this.$register.find(".ac-game-settings-username input");
+        this.$register_password = this.$register.find(".ac-game-settings-password-first input");
+        this.$register_password_confirm = this.$register.find(".ac-game-settings-password-second input");
+        this.$register_submit = this.$register.find(".ac-game-settings-submit button");
+        this.$register_error_message = this.$register.find(".ac-game-settings-error-message");
+        this.$register_login = this.$register.find(".ac-game-settings-option");
+
+        this.$register.hide();
+
+        this.root.$ac_game.append(this.$settings);
+
+        this.start();
+    }
+
+    start() {
+        this.getinfo();
+        this.add_listening_events();
+    }
+
+    add_listening_events() {
+        this.add_listening_events_login();
+        this.add_listening_events_register();
+    }
+
+    add_listening_events_login() {
+        let outer = this;
+
+        this.$login_register.click(function() {
+            outer.register();
+        });
+        this.$login_submit.click(function() {
+            outer.login_on_remote();
+        });
+    }
+
+    add_listening_events_register() {
+        let outer = this;
+        this.$register_login.click(function() {
+            outer.login();
+        });
+        this.$register_submit.click(function() {
+            outer.register_on_remote();
+        });
+    }
+
+    login_on_remote() {  // 在远程服务器上登录
+        let outer = this;
+        let username = this.$login_username.val();
+        let password = this.$login_password.val();
+        this.$login_error_message.empty();
+
+        $.ajax({
+            url: "/settings/login/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                } else {
+                    outer.$login_error_message.html(resp.result);
+                }
             }
-        }
-
-        this.render();
+        });
     }
 
-    get_dist(x1, y1, x2, y2) {
-        let dx = x1 - x2;
-        let dy = y1 - y2;
-        return Math.sqrt(dx * dx + dy * dy);
+    register_on_remote() {  // 在远程服务器上注册
+        let outer = this;
+        let username = this.$register_username.val();
+        let password = this.$register_password.val();
+        let password_confirm = this.$register_password_confirm.val();
+        this.$register_error_message.empty();
+
+        $.ajax({
+            url: "/settings/register/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+                password_confirm: password_confirm,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();  // 刷新页面
+                } else {
+                    outer.$register_error_message.html(resp.result);
+                }
+            }
+        });
     }
 
-    is_collision(player) {
-        let distance = this.get_dist(this.x, this.y, player.x, player.y);
-        if (distance < this.radius + player.radius)
-            return true;
-        return false;
+    logout_on_remote() {  // 在远程服务器上登出
+        if (this.platform === "ACAPP") return false;
+
+        $.ajax({
+            url: "/settings/logout/",
+            type: "GET",
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                }
+            }
+        });
     }
 
-    attack(player) {
-        let angle = Math.atan2(player.y - this.y, player.x - this.x);
-        player.is_attacked(angle, this.damage);
-        this.destroy();
+    register() {  // 打开注册界面
+        this.$login.hide();
+        this.$register.show();
     }
 
-    render() {
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        this.ctx.fillStyle = this.color;
-        this.ctx.fill();
+    login() {  // 打开登录界面
+        this.$register.hide();
+        this.$login.show();
+    }
+
+    getinfo() {
+        let outer = this;
+
+        $.ajax({
+            url: "/settings/getinfo/",
+            type: "GET",
+            data: {
+                platform: outer.platform,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    outer.username = resp.username;
+                    outer.photo = resp.photo;
+                    outer.hide();
+                    outer.root.menu.show();
+                } else {
+                    outer.login();
+                }
+            }
+        });
+    }
+
+    hide() {
+        this.$settings.hide();
+    }
+
+    show() {
+        this.$settings.show();
+    }
+}
+
+// 菜单类
+class AcGameMenu {
+    constructor(root) {
+        this.root = root;
+        this.$menu = $(`
+<div class="ac-game-menu">
+    <div class="ac-game-menu-field">
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
+            单人模式
+        </div>
+        <br>
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-multi-mode">
+            多人模式
+        </div>
+        <br>
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
+            退出
+        </div>
+    </div>
+</div>
+`);
+        this.$menu.hide();
+        this.root.$ac_game.append(this.$menu);
+        this.$single_mode = this.$menu.find('.ac-game-menu-field-item-single-mode');
+        this.$multi_mode = this.$menu.find('.ac-game-menu-field-item-multi-mode');
+        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
+
+        this.start();
+    }
+
+    start() {
+        this.add_listening_events();
+    }
+
+    add_listening_events() {
+        let outer = this;
+        this.$single_mode.click(function(){
+            outer.hide();
+            outer.root.playground.show();
+        });
+        this.$multi_mode.click(function(){
+            console.log("click multi mode");
+        });
+        this.$settings.click(function(){
+            console.log("click settings");
+            outer.root.settings.logout_on_remote();
+        });
+    }
+
+    show() {  // 显示menu界面
+        this.$menu.show();
+    }
+
+    hide() {  // 关闭menu界面
+        this.$menu.hide();
+    }
+}
+
+// 游戏主类
+export class AcGame {
+    constructor(id, AcWingOS) {
+        this.id = id;
+        this.$ac_game = $('#' + id);
+        this.AcWingOS = AcWingOS;
+
+        this.settings = new Settings(this);
+        this.menu = new AcGameMenu(this);
+        this.playground = new AcGamePlayground(this);
+
+        this.start();
+    }
+
+    start() {
     }
 }

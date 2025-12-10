@@ -34,7 +34,7 @@ class Settings {
         </div>
         <br>
         <div class="ac-game-settings-acwing">
-            <img width="30" src="http://127.0.0.1:8080/static/image/settings/QQ.png">
+            <img width="30" src="/static/image/settings/QQ.png">
             <br>
             <div>
                 QQ一键登录
@@ -72,7 +72,7 @@ class Settings {
         </div>
         <br>
         <div class="ac-game-settings-acwing">
-            <img width="30" src="http://127.0.0.1:8080/static/image/settings/QQ.png">
+            <img width="30" src="/static/image/settings/QQ.png">
             <br>
             <div>
                 QQ一键登录
@@ -143,7 +143,7 @@ class Settings {
         this.$login_error_message.empty();
 
         $.ajax({
-            url: "http://127.0.0.1:8080/settings/login/",
+            url: "/settings/login/",
             type: "GET",
             data: {
                 username: username,
@@ -168,7 +168,7 @@ class Settings {
         this.$register_error_message.empty();
 
         $.ajax({
-            url: "http://127.0.0.1:8080/settings/register/",
+            url: "/settings/register/",
             type: "GET",
             data: {
                 username: username,
@@ -190,7 +190,7 @@ class Settings {
         if (this.platform === "ACAPP") return false;
 
         $.ajax({
-            url: "http://127.0.0.1:8080/settings/logout/",
+            url: "/settings/logout/",
             type: "GET",
             success: function(resp) {
                 console.log(resp);
@@ -215,7 +215,7 @@ class Settings {
         let outer = this;
 
         $.ajax({
-            url: "http://127.0.0.1:8080/settings/getinfo/",
+            url: "/settings/getinfo/",
             type: "GET",
             data: {
                 platform: outer.platform,

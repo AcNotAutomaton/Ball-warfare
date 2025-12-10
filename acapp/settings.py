@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-#27-_62rw$@#(*2f!57vblmqkms(*lxds$34qzn=r+=qocr0qt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.3","127.0.0.1","localhost"]
+ALLOWED_HOSTS = ["192.168.124.26","127.0.0.1","localhost"]
 
 
 # Application definition
@@ -129,3 +129,7 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Security headers settings for development
+# Disable COOP policy for HTTP origins in development
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
