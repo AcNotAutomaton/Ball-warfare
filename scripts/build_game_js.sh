@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 构建游戏JS文件的生产版本
-JS_PATH=../game/static/js/
+JS_PATH=game/static/js/
 JS_PATH_SRC=${JS_PATH}src/
 JS_PATH_DIST=${JS_PATH}dist/
 
@@ -51,3 +51,54 @@ echo "// 游戏主类" >> ${JS_PATH_DIST}game.js
 cat ${JS_PATH_SRC}zbase.js >> ${JS_PATH_DIST}game.js
 
 echo "构建完成: ${JS_PATH_DIST}game.js"
+
+# 同时构建到static目录
+STATIC_JS_PATH=static/js/
+STATIC_JS_PATH_SRC=${STATIC_JS_PATH}src/
+STATIC_JS_PATH_DIST=${STATIC_JS_PATH}dist/
+
+# 确保dist目录存在
+mkdir -p ${STATIC_JS_PATH_DIST}
+
+# 清空旧文件
+> ${STATIC_JS_PATH_DIST}game.js
+
+# 按依赖顺序合并文件
+echo "// 游戏基础对象类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/ac_game_object/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 粒子效果类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/particle/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 游戏地图类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/game_map/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 火球技能类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/skill/fireball/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 玩家类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/player/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 游戏场景类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}playground/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 设置界面类" >> ${STATIC_JS_PATH_DIST}game.js
+if [ -f "${STATIC_JS_PATH_SRC}settings/zbase.js" ]; then
+    cat ${STATIC_JS_PATH_SRC}settings/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+    echo "" >> ${STATIC_JS_PATH_DIST}game.js
+fi
+
+echo "// 菜单类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}menu/zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+echo "" >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "// 游戏主类" >> ${STATIC_JS_PATH_DIST}game.js
+cat ${STATIC_JS_PATH_SRC}zbase.js >> ${STATIC_JS_PATH_DIST}game.js
+
+echo "构建完成: ${STATIC_JS_PATH_DIST}game.js"

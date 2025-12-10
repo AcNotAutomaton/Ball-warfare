@@ -56,7 +56,7 @@ sleep 3
 if pgrep -f "uwsgi.*$INI_FILE" > /dev/null; then
     echo "✓ uWSGI 启动成功!"
     echo "进程ID: $(pgrep -f 'uwsgi.*'$INI_FILE | tr '\n' ' ')"
-    echo "HTTP 访问地址: http://localhost:8080"
+    echo "HTTP 访问地址: http://localhost:9001"
     echo "Socket 地址: localhost:8000"
     echo "日志文件: $LOG_DIR/uwsgi.log"
 else

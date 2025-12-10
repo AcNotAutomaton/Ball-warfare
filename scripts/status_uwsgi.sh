@@ -44,13 +44,13 @@ echo ""
 # 检查端口占用
 echo "端口监听状态:"
 if command -v netstat &> /dev/null; then
-    echo "HTTP端口 8080:"
-    if netstat -tlnp 2>/dev/null | grep -q ":8080 "; then
-        netstat -tlnp 2>/dev/null | grep ":8080 " | while read line; do
+    echo "HTTP端口 9001:"
+    if netstat -tlnp 2>/dev/null | grep -q ":9001 "; then
+        netstat -tlnp 2>/dev/null | grep ":9001 " | while read line; do
             echo "  ✓ $line"
         done
     else
-        echo "  ✗ 端口 8080 未监听"
+        echo "  ✗ 端口 9001 未监听"
     fi
 
     echo "Socket端口 8000:"
@@ -62,13 +62,13 @@ if command -v netstat &> /dev/null; then
         echo "  ✗ 端口 8000 未监听"
     fi
 elif command -v ss &> /dev/null; then
-    echo "HTTP端口 8080:"
-    if ss -tlnp 2>/dev/null | grep -q ":8080 "; then
-        ss -tlnp 2>/dev/null | grep ":8080 " | while read line; do
+    echo "HTTP端口 9001:"
+    if ss -tlnp 2>/dev/null | grep -q ":9001 "; then
+        ss -tlnp 2>/dev/null | grep ":9001 " | while read line; do
             echo "  ✓ $line"
         done
     else
-        echo "  ✗ 端口 8080 未监听"
+        echo "  ✗ 端口 9001 未监听"
     fi
 
     echo "Socket端口 8000:"
