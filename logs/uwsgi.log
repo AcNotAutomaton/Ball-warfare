@@ -2,9 +2,9 @@
 [uwsgi-static] added mapping for /static => /home/cly/Ball-warfare/static
 [uwsgi-static] added mapping for /media => /home/cly/Ball-warfare/media
 [uwsgi-static] added check for True
-*** Starting uWSGI 2.0.20-debian (64bit) on [Fri Dec 12 18:39:35 2025] ***
+*** Starting uWSGI 2.0.20-debian (64bit) on [Wed Dec 17 00:19:43 2025] ***
 compiled with version: 11.2.0 on 21 March 2022 11:00:44
-os: Linux-6.8.0-88-generic #89~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:25:18 UTC 2
+os: Linux-6.8.0-90-generic #91~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 15:20:45 UTC 2
 nodename: cly-Lenovo-XiaoXinAir-14ITL-2021
 machine: x86_64
 clock source: unix
@@ -24,37 +24,30 @@ uwsgi socket 1 bound to TCP address 0.0.0.0:9001 fd 4
 Python version: 3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]
 PEP 405 virtualenv detected: /home/cly/Ball-warfare/.venv
 Set PythonHome to /home/cly/Ball-warfare/.venv
-Python main interpreter initialized at 0x5dd0f4b799a0
+Python main interpreter initialized at 0x6530441706e0
 python threads support enabled
 your server socket listen backlog is limited to 100 connections
 your mercy for graceful operations on workers is 60 seconds
 mapped 344232 bytes (336 KB) for 10 cores
 *** Operational MODE: preforking+threaded ***
 added /home/cly/Ball-warfare/.venv/lib/python3.10/site-packages/ to pythonpath.
-WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x5dd0f4b799a0 pid: 53873 (default app)
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x6530441706e0 pid: 6893 (default app)
 *** uWSGI is running in multiple interpreter mode ***
-spawned uWSGI master process (pid: 53873)
-spawned uWSGI worker 1 (pid: 53875, cores: 5)
-spawned uWSGI worker 2 (pid: 53877, cores: 5)
-[pid: 53875|app: 0|req: 1/1] 127.0.0.1 () {48 vars in 960 bytes} [Fri Dec 12 18:39:44 2025] GET / => generated 658 bytes in 99 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 0)
-[pid: 53877|app: -1|req: -1/2] 127.0.0.1 () {46 vars in 862 bytes} [Fri Dec 12 18:39:44 2025] GET /static/css/game.css => generated 2761 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 111 bytes (0 switches on core 0)
-[pid: 53877|app: -1|req: -1/3] 127.0.0.1 () {48 vars in 887 bytes} [Fri Dec 12 18:39:45 2025] GET /static/js/dist/game.js => generated 21382 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 119 bytes (0 switches on core 1)
-[pid: 53875|app: 0|req: 2/4] 127.0.0.1 () {48 vars in 904 bytes} [Fri Dec 12 18:39:45 2025] GET /settings/getinfo/?platform=WEB => generated 32 bytes in 2 msecs (HTTP/1.1 200) 6 headers in 171 bytes (1 switches on core 1)
-[pid: 53877|app: -1|req: -1/5] 127.0.0.1 () {46 vars in 926 bytes} [Fri Dec 12 18:39:45 2025] GET /static/image/settings/QQ.png => generated 3332 bytes in 1 msecs via sendfile() (HTTP/1.1 200) 3 headers in 112 bytes (0 switches on core 2)
-[pid: 53877|app: -1|req: -1/6] 127.0.0.1 () {46 vars in 935 bytes} [Fri Dec 12 18:39:45 2025] GET /static/image/menu/1.png => generated 160578 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 114 bytes (0 switches on core 4)
-[pid: 53877|app: -1|req: -1/7] 127.0.0.1 () {46 vars in 906 bytes} [Fri Dec 12 18:39:45 2025] GET /static/favicon.ico => generated 3332 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 127 bytes (0 switches on core 0)
-Not Found: /.well-known/appspecific/com.chrome.devtools.json
-[pid: 53877|app: 0|req: 1/8] 127.0.0.1 () {36 vars in 705 bytes} [Fri Dec 12 18:39:48 2025] GET /.well-known/appspecific/com.chrome.devtools.json => generated 3100 bytes in 82 msecs (HTTP/1.1 404) 5 headers in 174 bytes (1 switches on core 1)
-[pid: 53877|app: 0|req: 2/9] 127.0.0.1 () {48 vars in 932 bytes} [Fri Dec 12 18:39:54 2025] GET /settings/login/?username=cly&password=123456 => generated 21 bytes in 388 msecs (HTTP/1.1 200) 8 headers in 452 bytes (1 switches on core 3)
-[pid: 53877|app: 0|req: 3/10] 127.0.0.1 () {52 vars in 1080 bytes} [Fri Dec 12 18:39:55 2025] GET / => generated 658 bytes in 13 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 2)
-Not Found: /.well-known/appspecific/com.chrome.devtools.json
-[pid: 53875|app: 0|req: 3/11] 127.0.0.1 () {36 vars in 749 bytes} [Fri Dec 12 18:39:55 2025] GET /.well-known/appspecific/com.chrome.devtools.json => generated 3100 bytes in 20 msecs (HTTP/1.1 404) 5 headers in 174 bytes (1 switches on core 4)
-[pid: 53877|app: 0|req: 4/12] 127.0.0.1 () {48 vars in 948 bytes} [Fri Dec 12 18:39:55 2025] GET /settings/getinfo/?platform=WEB => generated 124 bytes in 8 msecs (HTTP/1.1 200) 6 headers in 172 bytes (1 switches on core 4)
-[pid: 53877|app: 0|req: 5/13] 127.0.0.1 () {52 vars in 1080 bytes} [Fri Dec 12 18:40:28 2025] GET / => generated 658 bytes in 1 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 1)
-Not Found: /.well-known/appspecific/com.chrome.devtools.json
-[pid: 53875|app: 0|req: 4/14] 127.0.0.1 () {36 vars in 749 bytes} [Fri Dec 12 18:40:28 2025] GET /.well-known/appspecific/com.chrome.devtools.json => generated 3100 bytes in 20 msecs (HTTP/1.1 404) 5 headers in 174 bytes (1 switches on core 3)
-[pid: 53875|app: -1|req: -1/15] 127.0.0.1 () {50 vars in 986 bytes} [Fri Dec 12 18:40:28 2025] GET /static/js/dist/game.js => generated 0 bytes in 0 msecs (HTTP/1.1 304) 0 headers in 29 bytes (0 switches on core 0)
-[pid: 53875|app: 0|req: 5/16] 127.0.0.1 () {48 vars in 948 bytes} [Fri Dec 12 18:40:28 2025] GET /settings/getinfo/?platform=WEB => generated 124 bytes in 14 msecs (HTTP/1.1 200) 6 headers in 172 bytes (1 switches on core 2)
+spawned uWSGI master process (pid: 6893)
+spawned uWSGI worker 1 (pid: 6895, cores: 5)
+spawned uWSGI worker 2 (pid: 6896, cores: 5)
+[pid: 6896|app: 0|req: 1/1] 127.0.0.1 () {48 vars in 1004 bytes} [Wed Dec 17 00:19:53 2025] GET / => generated 658 bytes in 70 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 0)
+[pid: 6896|app: -1|req: -1/2] 127.0.0.1 () {48 vars in 961 bytes} [Wed Dec 17 00:19:53 2025] GET /static/css/game.css => generated 0 bytes in 0 msecs (HTTP/1.1 304) 0 headers in 29 bytes (0 switches on core 1)
+[pid: 6896|app: -1|req: -1/3] 127.0.0.1 () {50 vars in 986 bytes} [Wed Dec 17 00:19:53 2025] GET /static/js/dist/game.js => generated 21382 bytes in 0 msecs via sendfile() (HTTP/1.1 200) 3 headers in 119 bytes (0 switches on core 2)
+[pid: 6895|app: -1|req: -1/4] 127.0.0.1 () {48 vars in 1025 bytes} [Wed Dec 17 00:19:53 2025] GET /static/image/settings/QQ.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 0 headers in 29 bytes (0 switches on core 0)
+[pid: 6896|app: 0|req: 2/5] 127.0.0.1 () {48 vars in 948 bytes} [Wed Dec 17 00:19:53 2025] GET /settings/getinfo/?platform=WEB => generated 124 bytes in 19 msecs (HTTP/1.1 200) 6 headers in 172 bytes (1 switches on core 3)
+[pid: 6896|app: -1|req: -1/6] 127.0.0.1 () {48 vars in 1034 bytes} [Wed Dec 17 00:19:53 2025] GET /static/image/menu/1.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 0 headers in 29 bytes (0 switches on core 4)
+[pid: 6896|app: 0|req: 3/7] 127.0.0.1 () {50 vars in 1035 bytes} [Wed Dec 17 00:20:22 2025] GET / => generated 658 bytes in 0 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 4)
+[pid: 6896|app: -1|req: -1/8] 127.0.0.1 () {48 vars in 1005 bytes} [Wed Dec 17 00:20:22 2025] GET /static/favicon.ico => generated 0 bytes in 0 msecs (HTTP/1.1 304) 0 headers in 29 bytes (0 switches on core 2)
+[pid: 6895|app: 0|req: 1/9] 127.0.0.1 () {48 vars in 948 bytes} [Wed Dec 17 00:20:22 2025] GET /settings/getinfo/?platform=WEB => generated 124 bytes in 46 msecs (HTTP/1.1 200) 6 headers in 172 bytes (1 switches on core 2)
+[pid: 6896|app: 0|req: 4/10] 127.0.0.1 () {48 vars in 921 bytes} [Wed Dec 17 00:20:23 2025] GET /settings/logout/ => generated 21 bytes in 5 msecs (HTTP/1.1 200) 7 headers in 270 bytes (1 switches on core 3)
+[pid: 6896|app: 0|req: 5/11] 127.0.0.1 () {52 vars in 1036 bytes} [Wed Dec 17 00:20:23 2025] GET / => generated 658 bytes in 1 msecs (HTTP/1.1 200) 5 headers in 166 bytes (1 switches on core 1)
+[pid: 6895|app: 0|req: 2/12] 127.0.0.1 () {48 vars in 904 bytes} [Wed Dec 17 00:20:23 2025] GET /settings/getinfo/?platform=WEB => generated 32 bytes in 1 msecs (HTTP/1.1 200) 6 headers in 171 bytes (1 switches on core 1)
 ...brutally killing workers...
 worker 1 buried after 1 seconds
 worker 2 buried after 1 seconds
@@ -65,12 +58,10 @@ found fd 3 mapped to socket 0 (0.0.0.0:8000)
 found fd 4 mapped to socket 1 (0.0.0.0:9001)
 running /usr/bin/uwsgi-core
 [uWSGI] getting INI configuration from /home/cly/Ball-warfare/scripts/uwsgi.ini
-[uwsgi-static] added mapping for /static => /home/cly/Ball-warfare/static
-[uwsgi-static] added mapping for /media => /home/cly/Ball-warfare/media
 [uwsgi-static] added check for True
-*** Starting uWSGI 2.0.20-debian (64bit) on [Fri Dec 12 18:45:04 2025] ***
+*** Starting uWSGI 2.0.20-debian (64bit) on [Wed Dec 17 00:22:52 2025] ***
 compiled with version: 11.2.0 on 21 March 2022 11:00:44
-os: Linux-6.8.0-88-generic #89~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:25:18 UTC 2
+os: Linux-6.8.0-90-generic #91~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 15:20:45 UTC 2
 nodename: cly-Lenovo-XiaoXinAir-14ITL-2021
 machine: x86_64
 clock source: unix
@@ -90,15 +81,15 @@ uwsgi socket 1 inherited INET address 0.0.0.0:9001 fd 4
 Python version: 3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]
 PEP 405 virtualenv detected: /home/cly/Ball-warfare/.venv
 Set PythonHome to /home/cly/Ball-warfare/.venv
-Python main interpreter initialized at 0x62395342de90
+Python main interpreter initialized at 0x5bef984fe7e0
 python threads support enabled
 your server socket listen backlog is limited to 100 connections
 your mercy for graceful operations on workers is 60 seconds
 mapped 344232 bytes (336 KB) for 10 cores
 *** Operational MODE: preforking+threaded ***
 added /home/cly/Ball-warfare/.venv/lib/python3.10/site-packages/ to pythonpath.
-WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x62395342de90 pid: 53873 (default app)
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x5bef984fe7e0 pid: 6893 (default app)
 *** uWSGI is running in multiple interpreter mode ***
-gracefully (RE)spawned uWSGI master process (pid: 53873)
-spawned uWSGI worker 1 (pid: 54288, cores: 5)
-spawned uWSGI worker 2 (pid: 54289, cores: 5)
+gracefully (RE)spawned uWSGI master process (pid: 6893)
+spawned uWSGI worker 1 (pid: 7310, cores: 5)
+spawned uWSGI worker 2 (pid: 7311, cores: 5)
