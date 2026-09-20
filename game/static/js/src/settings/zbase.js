@@ -33,7 +33,7 @@ class Settings {
             注册
         </div>
         <br>
-        <div class="ac-game-settings-acwing">
+        <div class="ac-game-settings-qq">
             <img width="30" src="/static/image/settings/QQ.png">
             <br>
             <div>
@@ -71,7 +71,7 @@ class Settings {
             登录
         </div>
         <br>
-        <div class="ac-game-settings-acwing">
+        <div class="ac-game-settings-qq">
             <img width="30" src="/static/image/settings/QQ.png">
             <br>
             <div>
@@ -100,6 +100,8 @@ class Settings {
 
         this.$register.hide();
 
+        this.$qq_login = this.$settings.find('.ac-game-settings-qq img');
+
         this.root.$ac_game.append(this.$settings);
 
         this.start();
@@ -113,6 +115,23 @@ class Settings {
     add_listening_events() {
         this.add_listening_events_login();
         this.add_listening_events_register();
+
+        let outer = this;
+        this.$qq_login.click(function() {
+            outer.qq_login();
+        });
+    }
+
+    qq_login() {
+        $.ajax({
+            url: "/settings/qq/web/apply_code/",
+            type: "GET",
+            success: function(resp) {
+                if (resp.result === "success") {
+                    window.location.replace(resp.apply_code_url);
+                }
+            }
+        });
     }
 
     add_listening_events_login() {

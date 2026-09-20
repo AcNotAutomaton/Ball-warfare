@@ -130,6 +130,13 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# QQ Connect OAuth login configuration.
+# Fill QQ_APPID / QQ_APPKEY with your own QQ Connect credentials,
+# set SITE_BASE_URL to the public origin that hosts this Django app.
+QQ_APPID = os.environ.get("QQ_APPID", "")
+QQ_APPKEY = os.environ.get("QQ_APPKEY", "")
+SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "http://127.0.0.1:8000")
+
 # Security headers settings for development
 # Disable COOP policy for HTTP origins in development
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
