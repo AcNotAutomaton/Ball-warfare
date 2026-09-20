@@ -20,7 +20,10 @@ def getinfo_web(request):
             'result': "未登录"
         })
     else:
-        player = Player.objects.get(user=user)
+        player, _ = Player.objects.get_or_create(
+            user=user,
+            defaults={'photo': "/static/image/playground/photo.png"},
+        )
         return JsonResponse({
             'result': "success",
             'username': player.user.username,
